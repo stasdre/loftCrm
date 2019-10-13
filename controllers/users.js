@@ -55,8 +55,8 @@ exports.create = (req, res, next) => {
               expiresIn: process.env.REFRESH_TOKEN_EXP
             }
           ),
-          accessTokenExpiredAt: Date.now() + process.env.TOKEN_EXP,
-          refreshTokenExpiredAt: Date.now() + process.env.REFRESH_TOKEN_EXP
+          accessTokenExpiredAt: Date.now() + +process.env.TOKEN_EXP,
+          refreshTokenExpiredAt: Date.now() + +process.env.REFRESH_TOKEN_EXP
         })
       )
       .catch(e => {
@@ -109,8 +109,8 @@ exports.login = (req, res, next) => {
               expiresIn: process.env.REFRESH_TOKEN_EXP
             }
           ),
-          accessTokenExpiredAt: Date.now() + process.env.TOKEN_EXP,
-          refreshTokenExpiredAt: Date.now() + process.env.REFRESH_TOKEN_EXP
+          accessTokenExpiredAt: Date.now() + +process.env.TOKEN_EXP,
+          refreshTokenExpiredAt: Date.now() + +process.env.REFRESH_TOKEN_EXP
         });
       }
 
