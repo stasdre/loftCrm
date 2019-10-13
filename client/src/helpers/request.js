@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { tokensSelector, refreshTokenRequest, logout } from '../store/auth';
 import { openNotification } from '../store/notifications';
-const baseURL = 'http://localhost:3000/api/';
+const baseURL = 'http://localhost:3000/api/v1.0/';
 const instance = axios.create({ baseURL });
 
 const waitQueue = [];
@@ -18,7 +18,6 @@ const request = ({
   dispatch = () => {}
 }) =>
   new Promise((resolve, reject) => {
-    
     const {
       accessToken,
       accessTokenExpiredAt,
@@ -29,7 +28,7 @@ const request = ({
     // request handler
     const requestFunc = ({ url, method, headers, data, resolve, reject }) => {
       if (!isWithoutToken) {
-        (headers['Authorization'] = isRefresh ? refreshToken : accessToken);
+        headers['Authorization'] = isRefresh ? refreshToken : accessToken;
       }
 
       return instance({ url, method, headers, data })
@@ -48,7 +47,7 @@ const request = ({
             switch (status) {
               case 401:
               case 403:
-                dispatch(logout())
+                dispatch(logout());
                 return reject(errorResponse);
               case 500:
               case 502:
@@ -94,7 +93,6 @@ const request = ({
 
       // dispatch refresh token (first-time only!)
       if (!isRefresh && !isRefreshDispatched) {
-        
         dispatch(refreshTokenRequest())
           .then(() => {
             isRefreshDispatched = true;
@@ -103,7 +101,7 @@ const request = ({
           })
           .catch(() => {
             // by default in error - logout user
-            dispatch(logout())
+            dispatch(logout());
             // eslint-disable-next-line
             reject({ detail: 'Refresh token error' });
           });
@@ -113,7 +111,7 @@ const request = ({
       }
     } else if (isRefreshExpired && !isWithoutToken) {
       // if refresh is expired - just logout
-      dispatch(logout())
+      dispatch(logout());
       // eslint-disable-next-line
       reject({ detail: 'Refresh token is expired' });
     } else {
