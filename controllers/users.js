@@ -65,3 +65,62 @@ exports.create = (req, res, next) => {
       });
   });
 };
+
+exports.login = (req, res, next) => {
+  const { username, password } = req.body;
+
+  User.findOne({ username })
+    .then(u => {
+      if (u && u.validPassword(password)) {
+        return res.status(200).json({
+          firstName: u.firstName,
+          id: u.id,
+          image: "",
+          middleName: u.middleName,
+          permission: {
+            chat: {
+              C: true,
+              R: true,
+              U: true,
+              D: true
+            },
+            news: {
+              C: true,
+              R: true,
+              U: true,
+              D: true
+            },
+            settings: {
+              C: true,
+              R: true,
+              U: true,
+              D: true
+            }
+          },
+          surName: u.surName,
+          username: u.username,
+          accessToken: jwt.sign({ id: u.id }, process.env.TOKEN_SECRET, {
+            expiresIn: process.env.TOKEN_EXP
+          }),
+          refreshToken: jwt.sign(
+            { id: u.id },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+              expiresIn: process.env.REFRESH_TOKEN_EXP
+            }
+          ),
+          accessTokenExpiredAt: Date.now() + process.env.TOKEN_EXP,
+          refreshTokenExpiredAt: Date.now() + process.env.REFRESH_TOKEN_EXP
+        });
+      }
+
+      return res
+        .status(400)
+        .json({ error: true, message: "Incorrect username or password" });
+    })
+    .catch(() =>
+      res
+        .status(400)
+        .json({ error: true, message: "Incorrect username or password" })
+    );
+};

@@ -1,9 +1,8 @@
 const { Router } = require("express");
+const controller = require("../../controllers/users");
 
 const router = Router();
 
-router.post("/", async (req, res) => {
-  res.json({ message: "Login!!" });
-});
+router.post("/", controller.login);
 
 module.exports = router;
