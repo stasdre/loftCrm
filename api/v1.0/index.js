@@ -10,5 +10,6 @@ router.use("/login", require("./auth"));
 router.use("/registration", require("./reg"));
 router.use("/profile", checkToken, require("./profile"));
 router.use("/users", checkToken, require("./users"));
+router.use("/news", checkToken, require("./news"));
 
 module.exports = router;

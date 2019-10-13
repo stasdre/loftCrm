@@ -12,6 +12,7 @@ mongoose.connect(
 );
 
 require("./user");
+require("./news");
 
 mongoose.connection.on("connected", () => {
   console.log("Mongoose connection open");
