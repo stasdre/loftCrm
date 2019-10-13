@@ -26,6 +26,11 @@ news.method("transform", function() {
   delete obj._id;
   delete obj.__v;
 
+  if (obj.user) {
+    obj.user.id = obj.user._id;
+    delete obj.user._id;
+  }
+
   return obj;
 });
 
