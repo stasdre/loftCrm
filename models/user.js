@@ -37,11 +37,11 @@ const user = new Schema({
       },
       U: {
         type: Boolean,
-        default: true
+        default: false
       },
       D: {
         type: Boolean,
-        default: true
+        default: false
       }
     },
     news: {
@@ -55,11 +55,11 @@ const user = new Schema({
       },
       U: {
         type: Boolean,
-        default: true
+        default: false
       },
       D: {
         type: Boolean,
-        default: true
+        default: false
       }
     },
     settings: {
@@ -77,7 +77,7 @@ const user = new Schema({
       },
       D: {
         type: Boolean,
-        default: true
+        default: false
       }
     }
   },

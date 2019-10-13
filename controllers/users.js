@@ -50,4 +50,19 @@ exports.getAll = (req, res, next) => {
   });
 };
 
-exports.permissionsUpdate = (req, res, next) => {};
+exports.permissionsUpdate = (req, res, next) => {
+  const { permission } = req.body;
+  User.updateOne({ _id: req.params.id }, { permission })
+    .then(results => {
+      if (results) {
+        return res
+          .status(200)
+          .json({ error: false, message: "Permissions was updated" });
+      }
+
+      return res.status(404).json({ error: true, message: "User not found" });
+    })
+    .catch(e => {
+      return res.status(400).json({ error: true, message: e.message });
+    });
+};
