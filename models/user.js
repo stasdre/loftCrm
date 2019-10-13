@@ -18,6 +18,65 @@ const user = new Schema({
   middleName: {
     type: String
   },
+  image: {
+    type: String
+  },
+  permission: {
+    chat: {
+      C: {
+        type: Boolean,
+        default: true
+      },
+      R: {
+        type: Boolean,
+        default: true
+      },
+      U: {
+        type: Boolean,
+        default: true
+      },
+      D: {
+        type: Boolean,
+        default: true
+      }
+    },
+    news: {
+      C: {
+        type: Boolean,
+        default: true
+      },
+      R: {
+        type: Boolean,
+        default: true
+      },
+      U: {
+        type: Boolean,
+        default: true
+      },
+      D: {
+        type: Boolean,
+        default: true
+      }
+    },
+    settings: {
+      C: {
+        type: Boolean,
+        default: true
+      },
+      R: {
+        type: Boolean,
+        default: true
+      },
+      U: {
+        type: Boolean,
+        default: true
+      },
+      D: {
+        type: Boolean,
+        default: true
+      }
+    }
+  },
   hash: {
     type: String,
     required: [true, "Password not be empty"]

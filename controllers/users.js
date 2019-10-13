@@ -21,28 +21,9 @@ exports.create = (req, res, next) => {
         res.status(200).json({
           firstName: u.firstName,
           id: u.id,
-          image: "",
+          image: u.image,
           middleName: u.middleName,
-          permission: {
-            chat: {
-              C: true,
-              R: true,
-              U: true,
-              D: true
-            },
-            news: {
-              C: true,
-              R: true,
-              U: true,
-              D: true
-            },
-            settings: {
-              C: true,
-              R: true,
-              U: true,
-              D: true
-            }
-          },
+          permission: u.permission,
           surName: u.surName,
           username: u.username,
           accessToken: jwt.sign({ id: u.id }, process.env.TOKEN_SECRET, {
@@ -77,26 +58,7 @@ exports.login = (req, res, next) => {
           id: u.id,
           image: "",
           middleName: u.middleName,
-          permission: {
-            chat: {
-              C: true,
-              R: true,
-              U: true,
-              D: true
-            },
-            news: {
-              C: true,
-              R: true,
-              U: true,
-              D: true
-            },
-            settings: {
-              C: true,
-              R: true,
-              U: true,
-              D: true
-            }
-          },
+          permission: u.permission,
           surName: u.surName,
           username: u.username,
           accessToken: jwt.sign({ id: u.id }, process.env.TOKEN_SECRET, {

@@ -10,11 +10,7 @@ exports.check = (req, res, next) => {
           id: u.id,
           image: "",
           middleName: u.middleName,
-          permission: {
-            chat: { C: true, R: true, U: true, D: true },
-            news: { C: true, R: true, U: true, D: true },
-            settings: { C: true, R: true, U: true, D: true }
-          },
+          permission: u.permission,
           surName: u.surName,
           username: u.username
         });
