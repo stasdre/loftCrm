@@ -10,16 +10,20 @@ const user = new Schema({
     unique: [true, "Incorect username"]
   },
   surName: {
-    type: String
+    type: String,
+    default: null
   },
   firstName: {
-    type: String
+    type: String,
+    default: null
   },
   middleName: {
-    type: String
+    type: String,
+    default: null
   },
   image: {
-    type: String
+    type: String,
+    default: null
   },
   permission: {
     chat: {
@@ -90,5 +94,16 @@ user.methods.setPassword = function(password) {
 user.methods.validPassword = function(password) {
   return bCrypt.compareSync(password, this.hash);
 };
+
+user.method("transform", function() {
+  const obj = this.toObject();
+
+  obj.id = obj._id;
+  delete obj._id;
+  delete obj.__v;
+  delete obj.hash;
+
+  return obj;
+});
 
 model("User", user);
