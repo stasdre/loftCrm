@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
+
 const News = mongoose.model("News");
 
 exports.getAll = (req, res, next) => {
-  News.find({})
+  News.find()
     .populate("user", "firstName image middleName surName username")
-    .then(u => {
-      const news = u.map(item => item.transform());
+    .then(n => {
+      const news = n.map(item => item.transform(true));
       return res.status(200).json(news);
     });
 };
@@ -22,12 +23,14 @@ exports.create = (req, res, next) => {
 
   newNews
     .save()
-    .then(n => {
-      n.populate("user");
-      res.status(200).json({
-        ...n.transform()
-      });
-    })
+    .then(n =>
+      News.find()
+        .populate("user", "firstName image middleName surName username")
+        .then(n => {
+          const news = n.map(item => item.transform(true));
+          return res.status(200).json(news);
+        })
+    )
     .catch(e => {
       console.log(e);
       return res.status(400).json({ error: true, message: e.message });
