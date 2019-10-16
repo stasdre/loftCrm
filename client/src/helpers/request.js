@@ -28,6 +28,7 @@ const request = ({
     // request handler
     const requestFunc = ({ url, method, headers, data, resolve, reject }) => {
       if (!isWithoutToken) {
+        const { accessToken, refreshToken } = tokensSelector(getState());
         headers['Authorization'] = isRefresh ? refreshToken : accessToken;
       }
 
