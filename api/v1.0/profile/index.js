@@ -9,14 +9,14 @@ const router = Router();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (
-      !fs.existsSync(path.join(__dirname, "../../../client/public/uploads"))
+      !fs.existsSync(path.join(__dirname, "../../../", process.env.UPLOAD_DIR))
     ) {
-      fs.mkdirSync(path.join(__dirname, "../../../client/public/uploads"), {
+      fs.mkdirSync(path.join(__dirname, "../../../", process.env.UPLOAD_DIR), {
         recursive: true
       });
     }
 
-    cb(null, path.join(__dirname, "../../../client/public/uploads"));
+    cb(null, path.join(__dirname, "../../../", process.env.UPLOAD_DIR));
   },
   filename: (req, file, cb) => {
     const fileName = `${Date.now()}-${file.originalname}`;
