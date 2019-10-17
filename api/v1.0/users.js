@@ -1,11 +1,10 @@
 const { Router } = require("express");
-const controller = require("../../../controllers/news");
+const controller = require("../../controllers/users");
 
 const router = Router();
 
 router.get("/", controller.getAll);
-router.post("/", controller.create);
 router.delete("/:id", controller.remove);
-router.patch("/:id", controller.update);
+router.patch("/:id/permission", controller.permissionsUpdate);
 
 module.exports = router;

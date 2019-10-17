@@ -3,6 +3,7 @@ const express = require("express");
 const httpErrors = require("http-errors");
 const logger = require("morgan");
 const path = require("path");
+const checkToken = require("./libs/checkToken");
 
 const app = express();
 require("dotenv").config();
@@ -14,7 +15,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use("/api/v1.0", require(path.join(__dirname, "api", "v1.0")));
+app.use("/api/v1.0", require("./api/v1.0/auth"));
+app.use("/api/v1.0/profile", checkToken, require("./api/v1.0/profile"));
+app.use("/api/v1.0/news", checkToken, require("./api/v1.0/news"));
+app.use("/api/v1.0/users", checkToken, require("./api/v1.0/users"));
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files
