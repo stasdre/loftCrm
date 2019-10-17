@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const schema = require("../schemas/news");
 
 const News = mongoose.model("News");
 

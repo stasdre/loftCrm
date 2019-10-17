@@ -3,6 +3,8 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const controller = require("../../controllers/profile");
+const schema = require("../../schemas/profile");
+const validation = require("../../middleware/validation");
 
 const router = Router();
 
@@ -29,6 +31,11 @@ const upload = multer({
 });
 
 router.get("/", controller.check);
-router.patch("/", upload.single("avatar"), controller.update);
+router.patch(
+  "/",
+  upload.single("avatar"),
+  validation(schema),
+  controller.update
+);
 
 module.exports = router;

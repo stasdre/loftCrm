@@ -4,16 +4,16 @@ const news = new Schema(
   {
     title: {
       type: String,
-      required: [true, "Title is not be empty"],
-      minlength: [10, "Min legth must be 10 characters"],
-      maxlength: [200, "Max legth must be 200 characters"]
+      required: true,
+      minlength: 5,
+      maxlength: 200
     },
     text: {
       type: String,
-      required: [true, "Text is not be empty"]
+      required: true
     },
     user: {
-      required: [true, "User is not be empty"],
+      required: true,
       type: Schema.Types.ObjectId,
       ref: "User"
     }

@@ -3,7 +3,7 @@ const express = require("express");
 const httpErrors = require("http-errors");
 const logger = require("morgan");
 const path = require("path");
-const checkToken = require("./libs/checkToken");
+const checkToken = require("./middleware/checkToken");
 
 const app = express();
 require("dotenv").config();

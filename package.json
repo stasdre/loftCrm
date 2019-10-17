@@ -12,6 +12,7 @@
     "start": "node ./bin/start"
   },
   "dependencies": {
+    "@hapi/joi": "^16.1.7",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",

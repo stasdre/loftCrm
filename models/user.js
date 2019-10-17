@@ -5,9 +5,9 @@ const user = new Schema(
   {
     username: {
       type: String,
-      required: [true, "Username not be empty"],
-      minlength: [3, "Min legth must be 3 characters"],
-      maxlength: [15, "Max legth must be 15 characters"],
+      required: true,
+      minlength: 3,
+      maxlength: 30,
       unique: [true, "Incorect username"]
     },
     surName: {
