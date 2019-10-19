@@ -38,4 +38,16 @@ news.method("transform", function(widthUser = false) {
   return obj;
 });
 
+news.statics.getAllNews = function() {
+  return new Promise((resolve, reject) => {
+    this.find()
+      .populate("user", "firstName image middleName surName username")
+      .then(n => {
+        const news = n.map(item => item.transform(true));
+        return resolve(news);
+      })
+      .catch(e => reject(e));
+  });
+};
+
 model("News", news);
