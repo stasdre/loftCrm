@@ -23,25 +23,10 @@ const csrfProtection =
     ? csrf({ cookie: true })
     : (req, res, next) => next();
 
-app.use("/api/v1.0", csrfProtection, require("./api/v1.0/auth"));
-app.use(
-  "/api/v1.0/profile",
-  csrfProtection,
-  checkToken,
-  require("./api/v1.0/profile")
-);
-app.use(
-  "/api/v1.0/news",
-  csrfProtection,
-  checkToken,
-  require("./api/v1.0/news")
-);
-app.use(
-  "/api/v1.0/users",
-  csrfProtection,
-  checkToken,
-  require("./api/v1.0/users")
-);
+app.use("/api/v1.0", require("./api/v1.0/auth"));
+app.use("/api/v1.0/profile", checkToken, require("./api/v1.0/profile"));
+app.use("/api/v1.0/news", checkToken, require("./api/v1.0/news"));
+app.use("/api/v1.0/users", checkToken, require("./api/v1.0/users"));
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files
