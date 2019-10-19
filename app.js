@@ -4,6 +4,7 @@ const httpErrors = require("http-errors");
 const logger = require("morgan");
 const path = require("path");
 const useragent = require("express-useragent");
+const csrf = require("csurf");
 
 const app = express();
 require("dotenv").config();
@@ -17,10 +18,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(useragent.express());
 
-app.use("/api/v1.0", require("./api/v1.0/auth"));
-app.use("/api/v1.0/profile", checkToken, require("./api/v1.0/profile"));
-app.use("/api/v1.0/news", checkToken, require("./api/v1.0/news"));
-app.use("/api/v1.0/users", checkToken, require("./api/v1.0/users"));
+const csrfProtection =
+  process.env.NODE_ENV === "production"
+    ? csrf({ cookie: true })
+    : (req, res, next) => next();
+
+app.use("/api/v1.0", csrfProtection, require("./api/v1.0/auth"));
+app.use(
+  "/api/v1.0/profile",
+  csrfProtection,
+  checkToken,
+  require("./api/v1.0/profile")
+);
+app.use(
+  "/api/v1.0/news",
+  csrfProtection,
+  checkToken,
+  require("./api/v1.0/news")
+);
+app.use(
+  "/api/v1.0/users",
+  csrfProtection,
+  checkToken,
+  require("./api/v1.0/users")
+);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files
@@ -28,6 +49,7 @@ if (process.env.NODE_ENV === "production") {
 
   // Handle React routing, return all requests to React app
   app.get("*", (req, res) => {
+    res.cookie("XSRF-TOKEN", req.csrfToken());
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
