@@ -13,6 +13,7 @@ mongoose.connect(
 
 require("./user");
 require("./news");
+require("./token");
 
 mongoose.connection.on("connected", () => {
   console.log("Mongoose connection open");

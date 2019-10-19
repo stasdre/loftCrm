@@ -3,17 +3,19 @@ const express = require("express");
 const httpErrors = require("http-errors");
 const logger = require("morgan");
 const path = require("path");
-const checkToken = require("./middleware/checkToken");
+const useragent = require("express-useragent");
 
 const app = express();
 require("dotenv").config();
 require("./socket");
 require("./models");
+const checkToken = require("./middleware/checkToken");
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(useragent.express());
 
 app.use("/api/v1.0", require("./api/v1.0/auth"));
 app.use("/api/v1.0/profile", checkToken, require("./api/v1.0/profile"));
