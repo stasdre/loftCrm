@@ -43,10 +43,13 @@ const selectedRoom = handleActions(
   null
 );
 
-const messageText = handleActions({
-  [setMessageText]: (_, action) => action.payload,
-  [resetMessage]: () => ''
-}, '')
+const messageText = handleActions(
+  {
+    [setMessageText]: (_, action) => action.payload,
+    [resetMessage]: () => ''
+  },
+  ''
+);
 
 export default combineReducers({
   users,
@@ -57,7 +60,7 @@ export default combineReducers({
 
 export const connectSocket = () => (dispatch, getState) => {
   const userProfile = userProfileSelector(getState());
-  socket = socketIO('http://localhost:3000');
+  socket = socketIO('/');
 
   socket.emit('users:connect', { id: userProfile.id, username: userProfile.username });
 
@@ -69,10 +72,10 @@ export const connectSocket = () => (dispatch, getState) => {
 };
 
 export const sendMessage = () => (dispatch, getState) => {
-  const state = getState()
+  const state = getState();
   const userProfile = userProfileSelector(state);
   const selectedRoom = chatSelectedRoomSelector(state);
-  const messageText = chatMessageText(state)
+  const messageText = chatMessageText(state);
   socket.emit('message:add', { senderId: userProfile.id, roomId: selectedRoom, text: messageText });
-  dispatch(resetMessage())
+  dispatch(resetMessage());
 };
