@@ -13,8 +13,10 @@ exports.login = (req, res, next) => {
       if (u && u.validPassword(password)) {
         const payload = {
           id: u.id,
+          permission: u.permission,
           useragent: req.useragent.source
         };
+
         return newTokens(payload)
           .then(tokens =>
             res.status(200).json({
@@ -57,6 +59,7 @@ exports.refresh = (req, res, next) => {
 
           const payload = {
             id: decoded.id,
+            permission: decoded.permission,
             useragent: req.useragent.source
           };
 
@@ -102,6 +105,7 @@ exports.reg = (req, res, next) => {
       .then(u => {
         const payload = {
           id: u.id,
+          permission: u.permission,
           useragent: req.useragent.source
         };
 
