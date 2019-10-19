@@ -9,7 +9,8 @@
     "server": "nodemon ./bin/start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "dev:server": "cd client && yarn build && cd .. && yarn start",
-    "start": "node ./bin/start"
+    "start": "node ./bin/start",
+    "build": "cd client && yarn build"
   },
   "dependencies": {
     "@hapi/joi": "^16.1.7",
