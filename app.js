@@ -8,8 +8,8 @@ const csrf = require("csurf");
 
 const app = express();
 require("dotenv").config();
-require("./socket");
 require("./models");
+require("./controllers/chat");
 const checkToken = require("./middleware/checkToken");
 
 app.use(logger("dev"));

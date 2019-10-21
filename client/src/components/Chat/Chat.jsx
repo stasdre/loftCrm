@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux'
-import { connectSocket, chatUsersSelector, chatSelectedRoomSelector, chatMessagesList } from '../../store/chat'
+import { connectSocket, disconnectSocket, chatUsersSelector, chatSelectedRoomSelector, chatMessagesList } from '../../store/chat'
 import {
   Grid,
   Container,
@@ -23,12 +23,20 @@ const styles = theme => ({
     flex: '1 1 100%',
     paddingTop: theme.spacing(1)
   },
+  empty: {
+    padding: theme.spacing(3)
+  }
 });
 
 class Chat extends PureComponent {
   componentDidMount () {
     const { dispatch } = this.props;
     dispatch(connectSocket())
+  }
+
+  componentWillUnmount () {
+    const { dispatch } = this.props;
+    dispatch(disconnectSocket())
   }
   render() {
     const { classes, users, messages, selectedRoom } = this.props;
@@ -41,7 +49,7 @@ class Chat extends PureComponent {
             </Grid>
             <Grid item xs={8}>
               <Card className={classes.column} square>
-                { selectedRoom ? <ChatActiveChatArea messages={messages} /> : <div>Выберите чат</div> }
+                { selectedRoom ? <ChatActiveChatArea messages={messages} /> : <div className={classes.empty}>Выберите чат</div> }
               </Card>
             </Grid>
           </Grid>

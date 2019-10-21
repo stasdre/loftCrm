@@ -79,3 +79,11 @@ export const sendMessage = () => (dispatch, getState) => {
   socket.emit('message:add', { senderId: userProfile.id, roomId: selectedRoom, text: messageText });
   dispatch(resetMessage());
 };
+
+export const disconnectSocket = () => (dispatch, getState) => {
+  socket && socket.disconnect();
+  dispatch(setUsers([]));
+  dispatch(setToZeroMessages());
+  dispatch(setSelectedRoom(null));
+  dispatch(resetMessage());
+};

@@ -14,6 +14,7 @@ mongoose.connect(
 require("./user");
 require("./news");
 require("./token");
+require("./chat");
 
 mongoose.connection.on("connected", () => {
   console.log("Mongoose connection open");
